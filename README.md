@@ -1,30 +1,24 @@
-# spot-dead-styles-ng README
+# spot-dead-styles
 
-This is the README for your extension "spot-dead-styles-ng". After writing up a brief description, we recommend including the following sections.
+In scenarios when component styles is created or modified, it is easy to let slip a class definition on the component template or styling definition. this can lead to remaining dead code that is very hard to spot without good eyes.
+Letting styling dead code results into increasing time to maintain the styles and modifying it.
 
-## Features
+## Purpose
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+First versions of the code base are for proof of concept purposes. this is not a reliable tool to run a daily basis because it can lead to mistakes considering that few classes are not fully reliable.
 
-For example if there is an image subfolder under your extension project workspace:
+## Scope
+Practically this can be achived on many type of template-style use cases. the use case that I face on day to day is related to Angular framework projects, configured with a scss styling. 
+the conventional file structure of a component is :
+```
+<component_name>
+|-<component_name>.component.html
+|-<component_name>.component.ts
+|-<component_name>.component.scss
+```
 
-\!\[feature X\]\(images/feature-x.png\)
+## Stages of verification
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-
+1. Development.
+2. Pre-push checks. 
+3. Code sanity check ( automation on PR reviews).

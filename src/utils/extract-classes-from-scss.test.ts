@@ -9,7 +9,7 @@ describe('extract-classes-from-scss', () => {
                     &--active {
                         .highlight {
                         &__holy-list {
-                            &__holy {}
+                                {}
                             }
                         }
                     }

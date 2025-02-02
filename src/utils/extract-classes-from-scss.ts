@@ -29,7 +29,7 @@ export function extractClassesFromSCSS(scssContent: string): string[] {
   }
 
   // Start processing the root rules
-  processRule(root as any);
+  processRule(root as any); 
 
   return Array.from(classes) as any;
 }

@@ -4,7 +4,6 @@ import { extractClassesFromTemplate } from './utils/extract-classes-from-templat
 import { extractClassesFromSCSS } from './utils/extract-classes-from-scss';
 import { getCorrespondingFileNameByExtension } from './utils/get-corresponding-file-name-by-extension';
 import { getFileContent } from './utils/find-file';
-import { highlightClasses } from './utils/highlight-classes';
 import { checkClasses } from './utils/check-classes';
 
 let outputChannel: vscode.OutputChannel;
@@ -60,12 +59,12 @@ async function handleDocumentChange(document: vscode.TextDocument) {
 	  outputChannel.appendLine('File content loaded.');
 	  const fileContent = document.getText();
   
+	  let htmlFilePath = '';
+	  let htmlFileContent = '';
+	  let scssFilePath = '';
+	  let scssFileContent = '';
+
 	  try {
-		  let htmlFilePath = '';
-		  let htmlFileContent = '';
-		  let scssFilePath = '';
-		  let scssFileContent = '';
-  
 		  // If the file is an HTML file
 		  if (filePath.endsWith('.html')) {
 			  htmlFilePath = filePath;
@@ -91,27 +90,22 @@ async function handleDocumentChange(document: vscode.TextDocument) {
 			  outputChannel.appendLine('HTML file content loaded.');
 		  }
   
-		  // Extract classes from HTML and SCSS
 		  const htmlClasses = extractClassesFromTemplate(htmlFileContent);
 		  const scssClasses = extractClassesFromSCSS(scssFileContent);
   
-		  // Get the active text editor
 		  const activeTextEditor = vscode.window.activeTextEditor;
   
 		  if (activeTextEditor) {
 			  // Check for classes not mentioned in the other file
 			  const classesNotMentioned = filePath.endsWith('.html')
-				  ? checkClasses(htmlClasses, scssClasses) // Check HTML classes against SCSS
-				  : checkClasses(scssClasses, htmlClasses); // Check SCSS classes against HTML
+				  ? checkClasses(htmlClasses, scssClasses)
+				  : checkClasses(scssClasses, htmlClasses); 
 			
 			  
 			  outputChannel.appendLine(`html classes: ${htmlClasses}`);
 			  outputChannel.appendLine(`scss classes: ${scssClasses}`);
 			    
 			  outputChannel.appendLine(`classes missing: ${classesNotMentioned}`);
-
-			  // Highlight classes not mentioned
-			  highlightClasses(activeTextEditor, classesNotMentioned);
 		  }
 	  } catch (e) {
 		  console.error(e);

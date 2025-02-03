@@ -1,4 +1,4 @@
-import { extractClassesFromSCSS } from "./extract-classes-from-scss";
+import { extractClassesFromSCSS } from './extract-classes-from-scss';
 
 describe('extract-classes-from-scss', () => {
     it('Should return all the classes from the scss file', async () => {
@@ -18,12 +18,14 @@ describe('extract-classes-from-scss', () => {
                 }
             `);
 
-        expect(classes).toEqual(["something",
-       "something__content",
-        "something--active",
-       "highlight",
-       "highlight__holy-list",
-    "highlight__holy-list__holy",
-"something-else"]);
+        expect(classes).toEqual([
+            'something',
+            'something__content',
+            'something--active',
+            'highlight',
+            'highlight__holy-list',
+            'highlight__holy-list__holy',
+            'something-else',
+        ]);
     });
 });

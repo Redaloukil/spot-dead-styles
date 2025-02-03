@@ -7,10 +7,12 @@ export function extractClassesFromTemplate(template: string): string[] {
 
     // Recursively visit nodes in the parsed template
     const visitNodes = (nodes: any[]) => {
-        nodes.forEach(node => {
+        nodes.forEach((node) => {
             // Handle static class attributes
             if (node.attributes) {
-                const classAttr = node.attributes.find((attribute: any) => attribute.name === 'class');
+                const classAttr = node.attributes.find(
+                    (attribute: any) => attribute.name === 'class'
+                );
                 if (classAttr && classAttr.value) {
                     classAttr.value.split(/\s+/).forEach((cls: string) => classes.add(cls));
                 }
@@ -26,7 +28,7 @@ export function extractClassesFromTemplate(template: string): string[] {
                         if (input.value.source) {
                             extractKeysFromObjectString(input.value.source)
                                 .filter(Boolean)
-                                .forEach(e => classes.add(e));
+                                .forEach((e) => classes.add(e));
                         }
                     }
                 });

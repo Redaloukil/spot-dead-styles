@@ -20,5 +20,5 @@ the conventional file structure of a component is :
 ## Stages of verification
 
 1. Development.
-2. Pre-push checks. 
+2. Pre-push checks.
 3. Code sanity check ( automation on PR reviews).

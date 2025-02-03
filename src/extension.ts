@@ -5,16 +5,21 @@ import { getCorrespondingFileNameByExtension } from './utils/get-corresponding-f
 import { getFileContent } from './utils/find-file';
 import { checkClasses } from './utils/check-classes';
 
+const CONFIGURATION_KEY = 'spotDeadStyles';
+
 let outputChannel: vscode.OutputChannel;
 let activeDocument: vscode.TextDocument | null;
 
 export function activate(context: vscode.ExtensionContext) {
-    outputChannel = vscode.window.createOutputChannel('Spot dead styles ng');
+    outputChannel = vscode.window.createOutputChannel('Extension - spot dead styles ng');
+
+    const config = vscode.workspace.getConfiguration(CONFIGURATION_KEY);
+    const ignoreClassPrefixes = config.get<string[]>('ignoreClassPrefixes', []);
 
     vscode.workspace.onDidChangeTextDocument(async (event) => {
         if (activeDocument && event.document.uri === activeDocument.uri) {
             outputChannel.appendLine(`Active document edited: ${activeDocument.uri.fsPath}`);
-            handleDocumentChange(event.document);
+            handleDocumentChange(event.document, ignoreClassPrefixes);
         }
     });
 
@@ -22,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor) {
             activeDocument = editor.document;
             outputChannel.appendLine(`Active document changed: ${activeDocument.uri.fsPath}`);
-            handleDocumentChange(activeDocument);
+            handleDocumentChange(activeDocument, ignoreClassPrefixes);
         }
     });
 
@@ -36,7 +41,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
-async function handleDocumentChange(document: vscode.TextDocument) {
+async function handleDocumentChange(
+    document: vscode.TextDocument,
+    ignoreClassPrefixes: string[] = []
+) {
     // Get the file path of the opened document
     const filePath = document.uri.fsPath;
 
@@ -87,8 +95,18 @@ async function handleDocumentChange(document: vscode.TextDocument) {
             outputChannel.appendLine('HTML file content loaded.');
         }
 
-        const htmlClasses = extractClassesFromTemplate(htmlFileContent);
-        const scssClasses = extractClassesFromSCSS(scssFileContent);
+        // remove all ignored class prefixes
+        let htmlClasses = extractClassesFromTemplate(htmlFileContent);
+        let scssClasses = extractClassesFromSCSS(scssFileContent);
+
+        ignoreClassPrefixes.forEach((prefix) => {
+            htmlClasses = htmlClasses.filter((className) => !className.startsWith(prefix));
+            scssClasses = scssClasses.filter((className) => !className.startsWith(prefix));
+        });
+
+        outputChannel.appendLine(`HTML classes ${htmlClasses}`);
+
+        outputChannel.appendLine(`SCSS classes ${scssClasses}`);
 
         const activeTextEditor = vscode.window.activeTextEditor;
 

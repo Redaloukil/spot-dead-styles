@@ -8,10 +8,10 @@ describe('extract-classes-from-scss', () => {
                     }
                     &--active {
                         .highlight {
-                        &__holy-list {
-                                {}
+                            &__holy-list {
+                                    {}
+                                }
                             }
-                        }
                     }
                     
                     .something-else {}
@@ -24,7 +24,7 @@ describe('extract-classes-from-scss', () => {
             'something--active',
             'highlight',
             'highlight__holy-list',
-            'highlight__holy-list__holy',
+
             'something-else',
         ]);
     });

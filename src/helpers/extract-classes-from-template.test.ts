@@ -10,7 +10,9 @@ describe('extract-classes-from-template', () => {
             </div>
         `)
         ).toEqual(['header', 'main', 'active', 'disabled', 'footer', 'text-bold', 'text-italic']);
+    });
 
+    it('It should spot the classes only outside template branching', () => {
         expect(
             extractClassesFromTemplate(`<div class="weather-widget">
   @if(weatherForecast$ | async; as weatherData) { @for (weather of
@@ -20,6 +22,6 @@ describe('extract-classes-from-template', () => {
   </div>
   } }</div>
   <data value=""></data>`)
-        ).toEqual(['weather-widget', 'weather']);
+        ).toEqual(['weather-widget']);
     });
 });

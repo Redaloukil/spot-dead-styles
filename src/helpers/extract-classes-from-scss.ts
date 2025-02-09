@@ -1,6 +1,5 @@
-import postcss, { Root, Rule } from 'postcss';
+import postcss from 'postcss';
 import postcssScss from 'postcss-scss';
-import fs from 'fs';
 
 export function extractClassesFromSCSS(scssContent: string): string[] {
     const root = postcss.parse(scssContent, { syntax: postcssScss } as any);

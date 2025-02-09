@@ -1,6 +1,6 @@
 {
     "name": "spot-dead-styles",
-    "displayName": "Spot Dead Styles",
+    "displayName": "Spot dead styles",
     "description": "locate dead style declaration that are not used in the component styling file",
     "contributes": {
         "commands": [
@@ -9,6 +9,10 @@
                 "title": "Check if the selected template contain classes that are not in the scss file "
             }
         ],
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/Redaloukil/spot-dead-styles"
+        },
         "configuration": {
             "title": "Spot dead styles",
             "properties": {

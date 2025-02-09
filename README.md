@@ -8,8 +8,10 @@ Letting styling dead code results into increasing time to maintain the styles an
 First versions of the code base are for proof of concept purposes. this is not a reliable tool to run a daily basis because it can lead to mistakes considering that few classes are not fully reliable.
 
 ## Scope
-Practically this can be achived on many type of template-style use cases. the use case that I face on day to day is related to Angular framework projects, configured with a scss styling. 
+
+Practically this can be achived on many type of template-style use cases. the use case that I face on day to day is related to Angular framework projects, configured with a scss styling.
 the conventional file structure of a component is :
+
 ```
 <component_name>
 |-<component_name>.component.html
@@ -19,6 +21,10 @@ the conventional file structure of a component is :
 
 ## Stages of verification
 
-1. Development.
+1. Development ( using code editor extension), see section bellow
 2. Pre-push checks.
 3. Code sanity check ( automation on PR reviews).
+
+## Vscode extension
+
+to be registered.
